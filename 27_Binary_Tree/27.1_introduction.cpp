@@ -24,7 +24,7 @@ int main()
 
     node<int> *root = new node<int>(1);
     root->l_child = new node<int>(2);
-    root->r_child - new node<int>(3);
+    root->r_child = new node<int>(3);
 
     root->l_child->l_child = new node<int>(4);
     root->l_child->r_child = new node<int>(5);
