@@ -9,7 +9,7 @@ using namespace std;
 template <typename T>
 class heap
 {
-#define DEFAULT_ARRAY_SIZE (int)10e5
+#define DEFAULT_ARRAY_SIZE (int)10e6
 #define DEFAULT_ARRAY_INCREMENT_SIZE 100
     int size = DEFAULT_ARRAY_SIZE;
     T *data;
@@ -25,6 +25,8 @@ public:
 
     void insert_elem(const T &elem);
     T delete_elem();
+
+    ~heap() { delete[] data; }
 };
 
 template <typename T>
@@ -145,15 +147,16 @@ bool is_vector_sorted_desc(vector<int> &data)
     return true;
 }
 
-#define AVG_NUM 10
+#define AVG_NUM 100
 int main()
 {
     srand(time(0));
 
     ofstream fout("./dataset.csv", ios::out);
     fout << "size,avg_time_ms\n";
+    fout.close();
 
-    for (int n = 10000; n <= (int)10e5; n += 10000)
+    for (int n = 100000; n <= (int)10e6; n += 100000)
     {
         double avg_time_ms = 0;
         for (int x = 0; x < AVG_NUM; x++)
@@ -178,7 +181,9 @@ int main()
         }
 
         avg_time_ms /= AVG_NUM;
+        ofstream fout("./dataset.csv", ios::out | ios::app);
         fout << n << "," << avg_time_ms << "\n";
+        fout.close();
     }
 
     fout.close();
