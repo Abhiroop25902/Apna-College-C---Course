@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
+//all are zero indexed pos
 int getBit(int n, int pos)
 {
     return (n & (1<<pos)) != 0;
