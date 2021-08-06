@@ -5,6 +5,9 @@ using namespace std;
 vector<int> arr;
 vector<int> ans;
 
+//direct conversion from Recursion to DP -> 2D
+//but this can be reduced to 1D as it just uses it direct past
+
 int main()
 {
     int n;
