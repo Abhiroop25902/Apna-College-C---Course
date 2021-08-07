@@ -1,46 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void swap(int arr[], int i, int j)
+void swap(int *a, int *b)
 {
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
+    int c = *a;
+    *a = *b;
+    *b = c;
 }
 
-int partition(int arr[], int l, int r)
+int partition(int *arr, int initial, int final)
 {
-    int pivot = arr[r];
-    int i = l - 1;
+    int pivot_value = arr[initial];
 
-    for (int j = l; j < r; j++)
+    int left_iterator = initial;
+    int right_iterator = final;
+
+    while (true)
     {
-        if (arr[j] < pivot)
+        while (arr[left_iterator] < pivot_value)
+            left_iterator++;
+
+        while (pivot_value < arr[right_iterator])
+            right_iterator--;
+
+        if (arr[left_iterator] == arr[right_iterator])
         {
-            i++;
-            swap(arr, i, j);
+            if (left_iterator == right_iterator)
+                return left_iterator;
+            else
+                right_iterator--;
         }
+        else if (left_iterator < right_iterator)
+            swap(&arr[left_iterator], &arr[right_iterator]);
+        else
+            return left_iterator;
     }
-    swap(arr, i + 1, r);
-    return i + 1;
 }
 
-void quicksort(int arr[], int l, int r)
+//sorts array using quick_sort algorithm, give initial as 0, and final as sizeofarray -1
+void quick_sort(int *arr, int initial, int final)
 {
-    if (l < r)
+    if (initial < final)
     {
-        int pi = partition(arr, l, r);
-        quicksort(arr, l, pi - 1);
-        quicksort(arr, pi + 1, r);
+        int pos_of_pivot = partition(arr, initial, final);
+        quick_sort(arr, initial, pos_of_pivot);
+        quick_sort(arr, pos_of_pivot + 1, final);
     }
 }
+
 int main()
 {
-    int arr[5] = {5,4,3,2,1};
-    quicksort(arr,0,4);
+    int n;
+    cin >> n;
 
-    for(int i=0;i<5;i++)
-        cout<<arr[i]<<" ";
-    cout<<endl;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    quick_sort(arr, 0, n - 1);
+
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
     return 0;
 }
